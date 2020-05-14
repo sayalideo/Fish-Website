@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block content %}
+<article class="media content-section">
+        
+    <div class="jumbotron media-body">
+        <div class="side">
+            <img class="rounded-circle avatar" src="{{ url_for('static', filename='profile_pics/' + d.author.image_file) }}" alt="">
+        </div>
+        <div class="side">
+            <h4>
+                <a class="mr-2 " href="/account.html"> {{ post.author.username }} </a> 
+                <small class="text-muted "> {{post.date_posted.strftime('%d-%m-%Y')}} </small>
+            </h4>                    
+        </div> 
+        <hr>
+        <h3 >  {{post.title}}  </h3>
+        <p class="article-content"> {{ post.content }} </p> 
+    </div>
+
+</article>
+{% endblock content %}
