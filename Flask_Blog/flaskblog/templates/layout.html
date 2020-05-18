@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel="icon" 
+      type="image/png" 
+      href="{{ url_for('static', filename='icon.png')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" type="text/css">
     <meta charset="UTF-8">
@@ -13,7 +17,7 @@
     
     
 </head>
-<body>
+<body style="background-color:rgb(179, 33, 33)">
     <header class="site-header">
         <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,13 +57,13 @@
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-info my-1 my-sm-0" type="submit">Search</button>
+                    <button class="btn btn-outline-danger my-1 my-sm-0" type="submit">Search</button>
                   </form>
             </div>
         </nav>
 
     </header>
-    <br><br>
+    <br><br><br>
 
     <div class="container">
         {% with messages = get_flashed_messages(with_categories=True) %}
@@ -73,15 +77,79 @@
         {% endwith %}
         
     </div>
+
     {% block content %}{% endblock %}
 
     
 
-    <!-- Optional JavaScript -->
+    <!-- Optional JavaScript -->   
+    <script>
+
+$(document).ready(function() { 
+            $(".test").hover(function() { 
+                $(this).css("background-color", "green"); 
+            }, function() { 
+                $(this).css("background-color", "yellow"); 
+            }); 
+        }); 
+
+        console.log('hiiii');
+    $(function() {
+    var timer = null;
+    var xhr = null;
+
+    
+    $('.user_popup').hover(
+    function(event) {
+        // mouse in event handler
+        var elem = $(event.currentTarget);
+        timer = setTimeout(function() {
+            timer = null;
+            console.log('hiiii22')
+            // popup logic goes here
+            xhr = $.ajax(
+                '/user/' + elem.first().text().trim() ).done(
+                    function(data) {
+                        xhr = null
+                        // create and display popup here
+                        elem.popover({
+                                trigger: 'manual',
+                                html: true,
+                                animation: false,
+                                container: elem,
+                                content: data
+                            }).popover('show');
+                            flask_moment_render_all();
+                    }
+                );
+        }, 1000);
+    },
+    function(event) {
+        // mouse out event handler
+        var elem = $(event.currentTarget);
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+        }
+        else if (xhr) {
+            xhr.abort();
+            xhr = null;
+        }
+        else {
+            // destroy popup here
+            elem.popover('destroy');
+        }
+    }
+)
+});
+
+    </script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="{{url_for('static', filename='main.js')}}"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+    <script src="{{url_for('static', filename='main.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
  

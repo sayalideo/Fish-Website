@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    div {
+      background-color: #e6e8e6;
+    }
+
+    .avatar {
+    vertical-align: middle;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+</style>    
+<div >
+<table class="table">
+    <tr>
+        <td width="64" style="border: 0px;"><img class="rounded-circle avatar"  src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}" alt=""></td>
+        <td style="border: 0px;">
+            <h2> {{ user.username }}</h2>
+            <hr>
+            <h5>Ping Me On : <i> {{user.email}} </i></h5>
+           <small>
+                <p> <i> - Mushroom Blogger, Level {{ user.id }}</i> </p>
+                {% if user != current_user %}
+                    <strong>Follow on - </strong>
+                    <a href="www.twitter.com">
+                        Twitter
+                    </a>
+                    <a href="www.instagram.com">
+                        Instagram
+                    </a>
+                    <a href="www.linkedin.com">
+                        LinkedIn
+                    </a>
+                {% endif %}
+            </small>
+        </td>
+    </tr>
+</table>
+</div>

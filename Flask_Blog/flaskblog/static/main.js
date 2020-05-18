@@ -10,6 +10,7 @@ $('.carousel').carousel({
   $item.addClass('full-screen');
   
   $('.carousel img').each(function() {
+    console.log("hi");
     var $src = $(this).attr('src');
     var $color = $(this).attr('data-color');
     $(this).parent().css({
@@ -25,3 +26,12 @@ $('.carousel').carousel({
   });
 
   $item.eq(0).addClass('active');
+console.log('hiii')
+
+$(document).ready(function() { 
+  $(".test").hover(function() { 
+      $(this).css("background-color", "green"); 
+  }, function() { 
+      $(this).css("background-color", "yellow"); 
+  }); 
+}); 

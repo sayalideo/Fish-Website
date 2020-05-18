@@ -2,7 +2,7 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, abort
 from flaskblog.forms import RegistrationForm, LoginForm, UpdateForm, PostForm
 from flaskblog.models import User, Post
 from flaskblog import app, db, bcrypt
@@ -109,10 +109,37 @@ def new_post():
         db.session.commit()
         flash("Your Post has been created !", 'success')
         return redirect(url_for('home'))
-    return render_template("create_post.html", form=form)
+    return render_template("create_post.html", form=form, legend="New Post")
 
-# @app.route('/post/<int:post_id>')
-# def post(post_id):
-#     # post = Post.query.get(post_id) can use get() as well
-#     post = Post.query.get_or_404(post_id)
-#     return render_template('post.html', post=post)
+@app.route('/post/<int:post_id>')
+def post(post_id):
+    # post = Post.query.get(post_id) can use get() as well
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', post=post)
+
+@app.route('/post/<int:post_id>/update', methods=['GET','POST'])
+@login_required
+def update_post(post_id):
+    # post = Post.query.get(post_id) can use get() as well
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+        db.session.commit()
+        flash('Your Post has been updated!', 'success')
+        return redirect(url_for('post', post_id=post_id))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.content.data = post.content
+    return render_template('create_post.html',form=form, legend="Update Post")
+
+
+@app.route('/user/<username>')
+@login_required
+def user_popup(username): 
+    user = User.query.filter_by(username=username).first_or_404()
+    print(user)
+    return render_template('user.html', user=user)
