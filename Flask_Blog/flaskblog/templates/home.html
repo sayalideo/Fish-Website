@@ -9,21 +9,21 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="{{ url_for('static', filename='mushroom4.jpg')}}" height="512" width="2048" class="d-block w-100" alt="...">
+        <img src="{{ url_for('static', filename='carousel/boats.jpg')}}" height="512" width="2048" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>First slide label</h5>
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="{{ url_for('static', filename='mushroom3.jpg')}}" height="512" width="2048" class="d-block w-100" alt="...">
+        <img src="{{ url_for('static', filename='carousel/kochi.jpg')}}" height="512" width="2048" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>Second slide label</h5>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="{{ url_for('static', filename='mushroom6.jpg')}}" height="512" width="2048" class="d-block w-100" alt="...">
+        <img src="{{ url_for('static', filename='carousel/fish.jpg')}}" height="512" width="2048" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>Third slide label</h5>
           <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
@@ -48,7 +48,7 @@
   <a href="https://www.linkedin.com" class="linkedin"><i class="fa fa-linkedin"></i></a>
   <a href="https://www.youtube.com" class="youtube"><i class="fa fa-youtube"></i></a> 
 </div>
-<h3 class="text-white"><i class="test">Let's what our fellow Mushroom Maniacs have to say... </i></h3>
+<!-- <h3 class="text-white"><i class="test">Let's what our fellow Mushroom Maniacs have to say... </i></h3> -->
   <div class="container">
     <div class="row">
       {% for d in data %}
@@ -56,12 +56,12 @@
         
         <div class="jumbotron bg media-body shadow-lg p-3 mb-5 rounded">
             <div class="side">
-                <img class="rounded-circle avatar"  src="{{ url_for('static', filename='profile_pics/' + d.author.image_file) }}" alt="">
+                <img class="rounded-circle avatar"  src="{{ url_for('static', filename='profile_pics/' + d.post_author.image_file) }}" alt="">
             </div>
             <div class="side">
                 <h4>
                   <span >
-                    <a class="mr-2 text-white user_popup" href="{{ url_for('user_popup', username=d.author.username )}}"> {{ d.author.username }} </a> 
+                    <a class="mr-2 text-white user_popup" href="{{ url_for('user_popup', username=d.post_author.username )}}"> {{ d.post_author.username }} </a> 
                   </span>
                     <small class="text-muted text-white"> {{d.date_posted.strftime('%d-%m-%Y')}} </small>
                 </h4>                    

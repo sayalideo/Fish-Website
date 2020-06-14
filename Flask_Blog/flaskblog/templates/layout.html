@@ -7,24 +7,24 @@
     <!-- Bootstrap CSS -->
     <link rel="icon" 
       type="image/png" 
-      href="{{ url_for('static', filename='icon.png')}}">
+      href="{{ url_for('static', filename='icon.jpeg')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" type="text/css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mushroom Mania</title>
+    <title>Fresh Fish For All</title>
     
     
 </head>
-<body style="background-color:rgb(179, 33, 33)">
+<body style="background-image: url('/static/bg.jpg')">
     <header class="site-header">
         <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-                <img src="{{ url_for('static', filename='icon.png')}}" height="50" width="50" alt="">
-                <a href="/" class="navbar-brand text-white  "> &nbsp; Mushroom Mania</a>
+                <img src="{{ url_for('static', filename='icon.jpeg')}}" height="50" width="50" alt="">
+                <a href="/"> &nbsp; <img src="{{ url_for('static', filename='name.png')}}" height="50" width="160" alt="">&nbsp;</a>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item ">
@@ -38,8 +38,21 @@
                     <li class="nav-item " >
                         <a class="nav-link text-white" href="{{ url_for('new_post') }}">New Post <span class="sr-only">(current)</span></a>
                     </li>
+        
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Let’s Sell
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="{{ url_for('new_fish') }}">Add Fish</a>
+                          <a class="dropdown-item" href="{{ url_for('all_fish') }}">All Fish</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                      </li>
+                
                     <li class="nav-item " >
-                        <a class="nav-link text-white" href="{{ url_for('account') }}">Account <span class="sr-only">(current)</span></a>
+                        <a class="nav-link text-white" href="{{ url_for('user_popup',username=current_user.username) }}">My Account <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item " >
                         <a class="nav-link text-white" href="{{ url_for('logout') }}">Logout <span class="sr-only">(current)</span></a>
@@ -52,18 +65,24 @@
                     <li class="nav-item " >
                         <a class="nav-link text-white" href="{{ url_for('register') }}">Register <span class="sr-only">(current)</span></a>
                     </li>
+                    <li class="nav-item " >
+                        <a class="nav-link text-white" href="{{ url_for('all_fish') }}">All Fish<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item " >
+                        <a class="nav-link text-white" href="{{ url_for('all_posts') }}">Blogs <span class="sr-only">(current)</span></a>
+                    </li>
                     {% endif %}
                     
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-danger my-1 my-sm-0" type="submit">Search</button>
+                    <button class="btn btn-outline-primary my-1 my-sm-0" type="submit">Search</button>
                   </form>
             </div>
         </nav>
 
     </header>
-    <br><br><br>
+    <br><br>
 
     <div class="container">
         {% with messages = get_flashed_messages(with_categories=True) %}

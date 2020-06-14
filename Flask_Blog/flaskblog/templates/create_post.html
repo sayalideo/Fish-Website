@@ -43,7 +43,15 @@
                 {% endif %}
 
             </div>
-            
+            <div class="form-group">
+                {{ form.picture.label() }} <small>Ideal size (1920 x 1080) pixel [.jpg, .png exts.]</small>
+                {{ form.picture(class="form-control-file") }}
+                {% if form.picture.errors %}
+                    {% for error in form.picture.errors %}
+                        <span class="text-danger"> {{ error }} </span> <br>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </fieldset>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info")}}

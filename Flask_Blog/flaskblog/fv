@@ -18,10 +18,6 @@ ords = db.Table('ords',
     db.Column('fish_id', db.Integer, db.ForeignKey('fish.id'))
 )
 
-followers = db.Table('followers',
-    db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
-)
 class User(db.Model, UserMixin):
     id            = db.Column(db.Integer, primary_key = True)
     username      = db.Column(db.String(20), unique=True, nullable=False)
@@ -37,42 +33,26 @@ class User(db.Model, UserMixin):
     fishes        = db.relationship('Fish', backref='fish_seller', lazy='dynamic')
     #orders        = db.relationship('Order', backref='order_seller', lazy='dynamic')
     mycarousel    = db.relationship('Mycarousel', backref='author', lazy='dynamic')
-    followed = db.relationship(
-        'User', secondary=followers,
-        primaryjoin=(followers.c.follower_id == id),
-        secondaryjoin=(followers.c.followed_id == id),
-        backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
-    def follow(self, user):
-        if not self.is_following(user):
-            self.followed.append(user)
-
-    def unfollow(self, user):
-        if self.is_following(user):
-            self.followed.remove(user)
-
-    def is_following(self, user):
-        return self.followed.filter(
-            followers.c.followed_id == user.id).count() > 0
-
-    def followed_posts(self):
-        followed = Fish.query.join(
-            followers, (followers.c.followed_id == Fish.seller_id)).filter(
-                followers.c.follower_id == self.id)
-        own = Fish.query.filter_by(seller_id=self.id)
-        return followed.union(own).order_by(Fish.upload_date.desc())
     #username='hh', fullname='Haresh Hambire', email='haresh@gmail.com', password='qwe', points=0
     #username='sharad', fullname='Sharad Chaudhary', email='sharad@gmail.com', password='qwe', points=0
-    #username='saiy', fullname='Sayali Deo', email='saiy@gmail.com', password='qwe', points=0
+
 # class Cart(db.Model):
 #     id     = db.Column(db.Integer, primary_key = True)
 #     seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 #     order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
 #     seller = db.relationship("User", foreign_keys=[seller_id])
 #     order = db.relationship("Order", foreign_keys=[order_id])
+
+class Subs(db.Model):
+    id     = db.Column(db.Integer, primary_key = True)
+    seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    seller = db.relationship("User", foreign_keys=[seller_id])
+    buyer = db.relationship("User", foreign_keys=[buyer_id])
 
 class Order(db.Model):
     id               = db.Column(db.Integer, primary_key = True)
@@ -94,9 +74,7 @@ class Fish(db.Model):
     id          = db.Column(db.Integer, primary_key = True)
     name        = db.Column(db.String(20), nullable=False)
     description = db.Column(db.String(100), nullable=False)
-    upload_date = db.Column(db.DateTime, index=True, nullable=False, default=datetime.utcnow)
-    image_file  = db.Column(db.String(20), nullable=False)
-    image_url = db.Column(db.String, default=None, nullable=True)
+    image_file  = db.Column(db.String(20), nullable=False, default='icon.jpg')
     price       = db.Column(db.Integer, nullable=False)
     unit        = db.Column(db.String(20), nullable=False) # kg,gm,pc
     isAvailable = db.Column(db.Boolean, nullable=False, default=False)
@@ -151,15 +129,4 @@ Seller.query.all()
 Seller.query.filter_by(username='hh').all() ... returns list
 Seller.query.filter_by(username='hh').first() ... returns single item
 
-
-u2.followed.append(u1)
->>> u1.followers
-<sqlalchemy.orm.dynamic.AppenderBaseQuery object at 0x7f58877ea470>
->>> u1.followers.username
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-AttributeError: 'AppenderBaseQuery' object has no attribute 'username'
->>> u1.followers[0].username
-'sharad'
->>> 
 '''

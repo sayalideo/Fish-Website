@@ -1,16 +1,19 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from flask_wtf.file import FileField, FileAllowed, FileRequired
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, RadioField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from wtforms.fields.html5 import EmailField
-from flaskblog.models import User
+from flaskblog.models import User, Order, Fish, Post, Comment, Mycarousel
 from flask_login import current_user
 
 class RegistrationForm(FlaskForm):
     username         = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)]) # DataRequired means it cant be empty
+    fullname         = StringField('Full Name', validators=[DataRequired(), Length(min=2, max=20)])
+    address          = TextAreaField('Address', validators=[DataRequired(), Length(min=2, max=20)])
     email            = EmailField('Email', validators=[DataRequired(), Email()])
     password         = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    #picture          = FileField('Upload Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit           = SubmitField('Sign Up')
 
     def validate_username(self, username):
@@ -25,8 +28,10 @@ class RegistrationForm(FlaskForm):
 
 class UpdateForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)]) # DataRequired means it cant be empty
+    fullname = StringField('Full Name', validators=[DataRequired(), Length(min=2, max=20)])
+    address  = StringField('Address', validators=[DataRequired(), Length(min=2, max=20)])
     email    = EmailField('Email', validators=[DataRequired(), Email()])
-    picture  = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    picture  = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'],'Images only!')])
     submit   = SubmitField('Update')
 
     def validate_username(self, username):
@@ -43,7 +48,7 @@ class UpdateForm(FlaskForm):
                 raise ValidationError('Email Already Exists!')
 
 class LoginForm(FlaskForm):
-    email    = EmailField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit   = SubmitField('Login')
@@ -51,5 +56,18 @@ class LoginForm(FlaskForm):
 class PostForm(FlaskForm):
     title   = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
+    picture = FileField('Upload Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'], FileRequired())])
     submit  = SubmitField('Post')
+
+class NewFishForm(FlaskForm):
+    name        = StringField('Name', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    picture     = FileField('Upload Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!'))
+    price       = IntegerField('Price',validators=[DataRequired()])
+    unit        = RadioField('Unit', validators=[DataRequired()], choices=[('kg','Kilograms(Kg)'),('g','Grams(g)'),('pc','Piece(pc)')])
+    isAvailable = BooleanField('The stock is currently available')
+    submit      = SubmitField('Post Fish')
+    
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')
 
