@@ -4,14 +4,15 @@
         
     <div class="jumbotron media-body">
         <div class="side">
-            <img class="rounded-circle avatar" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
+            <img class="rounded-circle avatar" src="{{ url_for('static', filename='profile_pics/' + post.post_author.image_file) }}" alt="">
         </div>
         <div class="side">
             <h4>
-                <a class="mr-2 " href="/account.html"> {{ post.author.username }} </a> 
+                <a class="mr-2 " href="/account.html"> {{ post.post_author.username }} </a> 
                 <small class="text-muted "> {{post.date_posted.strftime('%d-%m-%Y')}} </small>
-            </h4>   
-            {% if post.author == current_user %}
+            </h4>  
+            <img src="{{ url_for('static', filename='post_pics/' + post.image_file) }}" alt=""> 
+            {% if post.post_author == current_user %}
                 <div>
                     <a class="btn btn-secondary btn-sm m-1" href="{{url_for('update_post', post_id=post.id)}}">Update</a>
                     <button type="button" class="btn btn-danger btn-sm mt-1 mb-1" data-toggle="modal" data-target="#deleteModal">Delete</button>

@@ -62,7 +62,7 @@ class PostForm(FlaskForm):
 class NewFishForm(FlaskForm):
     name        = StringField('Name', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
-    picture     = FileField('Upload Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!'))
+    picture     = FileField('Upload Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
     price       = IntegerField('Price',validators=[DataRequired()])
     unit        = RadioField('Unit', validators=[DataRequired()], choices=[('kg','Kilograms(Kg)'),('g','Grams(g)'),('pc','Piece(pc)')])
     isAvailable = BooleanField('The stock is currently available')

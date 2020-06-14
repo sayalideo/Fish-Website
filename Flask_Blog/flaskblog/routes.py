@@ -151,7 +151,8 @@ def save_post_pic(form_picture):
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        if form.picture.data :
+        print(form.picture.data, request.files['picture'])
+        if request.files['picture'] :
             picture_file = save_picture(form.picture.data)
         else:
             picture_file = 'waves.jpg'

@@ -96,7 +96,6 @@ class Fish(db.Model):
     description = db.Column(db.String(100), nullable=False)
     upload_date = db.Column(db.DateTime, index=True, nullable=False, default=datetime.utcnow)
     image_file  = db.Column(db.String(20), nullable=False)
-    image_url = db.Column(db.String, default=None, nullable=True)
     price       = db.Column(db.Integer, nullable=False)
     unit        = db.Column(db.String(20), nullable=False) # kg,gm,pc
     isAvailable = db.Column(db.Boolean, nullable=False, default=False)
