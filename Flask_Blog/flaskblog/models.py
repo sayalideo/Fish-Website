@@ -25,7 +25,7 @@ followers = db.Table('followers',
 class User(db.Model, UserMixin):
     id            = db.Column(db.Integer, primary_key = True)
     username      = db.Column(db.String(20), unique=True, nullable=False)
-    fullname      = db.Column(db.String(50))
+    fullname      = db.Column(db.String(60))
     email         = db.Column(db.String(20), unique=True)
     address       = db.Column(db.String(120))
     image_file    = db.Column(db.String(20), nullable=False, default='default.jpg')
@@ -88,16 +88,17 @@ class Order(db.Model):
     buyer            = db.relationship("User", foreign_keys=[buyer_id])
 
     def __repr__(self):
-        return f"Order('{self.title}', '{self.date_placed}', '{self.date_of_delivery}', '{self.bargained_price}')"
+        return f"Order('{self.seller_id}', '{self.date_placed}', '{self.date_of_delivery}', '{self.bargained_price}')"
 
 class Fish(db.Model):
     id          = db.Column(db.Integer, primary_key = True)
     name        = db.Column(db.String(20), nullable=False)
-    description = db.Column(db.String(100), nullable=False)
     upload_date = db.Column(db.DateTime, index=True, nullable=False, default=datetime.utcnow)
     image_file  = db.Column(db.String(20), nullable=False)
     price       = db.Column(db.Integer, nullable=False)
     unit        = db.Column(db.String(20), nullable=False) # kg,gm,pc
+    pc_vatta    = db.Column(db.Integer) 
+    price_vatta = db.Column(db.Integer)
     isAvailable = db.Column(db.Boolean, nullable=False, default=False)
     orders      = db.relationship('Order', secondary=ords, backref=db.backref('fishes'), lazy='dynamic')
     seller_id   = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

@@ -1,57 +1,55 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<br>
 <div class="container">
     <div class="row">
       {% for d in data.items %}
       <div class="col-lg-4">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{{ url_for('static', filename='fish_pics/' + d.image_file) }}" alt="Card image cap">
+            <img class="card-img-top img-fluid" src="{{ url_for('static', filename='fish_pics/' + d.image_file) }}" alt="Card image cap" >
             <div class="card-body">
               <div style="display:inline-block; vertical-align:top " >
                 <img src="{{ url_for('static', filename='profile_pics/' + d.fish_seller.image_file) }}" alt="64x64" class="mr-2 rounded" style="width: 64px; height: 64px;" data-holder-rendered="true">
               </div>
               <div style="display:inline-block">
-                <button class="btn btn-block text-left" type="button" >
-                    <h4><strong class="d-block text-dark card-title">{{ d.name }}</strong></h4>
-                  </button>
-                <small><i>@{{ d.fish_seller.username }}</i></small>
+                    <h3><strong class="d-block text-dark card-title">{{ d.name }}</strong></h3>
+                
+                    <a href="{{ url_for('user_popup', username=d.fish_seller.username)}}"><small><i>@{{ d.fish_seller.username }}</i></small></a>
               </div>
               <hr>
-              Uploaded : {{ d.upload_date }} 
-              <p class="card-text">{{ d.description }}</p>
-              Price    : Rs. {{ d.price }}/- per {{ d.unit }}
               {% if d.isAvailable %}
-            <b>Stock Available Now</b>
+            <b>Stock Available Now <a href="#" class="badge badge-pill badge-success"> New</a></b> <br>
+              {% else %}
+                <br>
               {% endif %}
-              <a href="#" class="btn btn-primary">Order</a>
+              Uploaded : {{d.upload_date.strftime("%d") }} {{d.upload_date.strftime("%b") }} '{{ d.upload_date.strftime("%y")}} {{ d.upload_date.strftime("%a")}} <br>
+              Price    : Rs. {{ d.price }}/- per {{ d.unit }} <br>
+              Vatta    : Rs. {{d.price_vatta}} per {{d.pc_vatta}} pieces <br>
+              {% if current_user == d.fish_seller %}
+                <br><br>
+              {% else %}
+                <a href="{{ url_for('new_order', buyername=current_user.username, sellername=d.fish_seller.username, fish=d.id)}}" class="btn btn-outline-primary btn-lg btn-block">Order</a>
+              {% endif %}
             </div>
-          </div>
+          </div><br>
       </div>
       {% endfor %}
     </div>
 </div>
- 
+<br><br><br>
+<div>
+  {% for page_num in data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+  {% if page_num %}
+    {% if data.page == page_num %}
+      <a class='btn btn-info mb-4' href="{{url_for('all_fish', page=page_num)}}">{{page_num}}</a>
+    {% else %}
+      <a class='btn btn-outline-info mb-4' href="{{url_for('all_fish', page=page_num)}}">{{page_num}}</a>
+    {% endif %}
+  {% else %} 
+     
+  {% endif %}
+  {% endfor %}
+</div>
+
 {% endblock content %}
-     <!-- <div class="col-lg-4">
-        
-        <div class="jumbotron bg media-body shadow-lg p-3 mb-5 rounded">
-            <div class="side">
-                <img class="rounded-circle avatar"  src="{{ url_for('static', filename='profile_pics/' + d.post_author.image_file) }}" alt="">
-            </div>
-            <div class="side">
-                <h4>
-                  <span >
-                    <a class="mr-2 text-white user_popup" href="{{ url_for('user_popup', username=d.post_author.username )}}"> {{ d.post_author.username }} </a> 
-                  </span>
-                    <small class="text-muted text-white"> {{d.date_posted.strftime('%d-%m-%Y')}} </small>
-                </h4>                    
-             </div> 
-            <hr>
-            <h3 >  {{d.title}} </h3>
-            <p class="article-content text-justify text-white cut-text "> {{ d.content }} </p> 
-            <button type="button" class="btn btn-sm btn-outline-dark" ><a class="text-white" href="{{ url_for('post', post_id =d.id )}}">Read More >>></a></button>
-           
-        </div>
-        
-      </div> -->
+

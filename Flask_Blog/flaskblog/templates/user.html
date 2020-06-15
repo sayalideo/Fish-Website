@@ -2,54 +2,95 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-    div {
-      background-color: #e6e8e6;
-    }
+<br>
+<div class="jumbotron">
 
-    .avatar {
-    vertical-align: middle;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-  }
-</style>    
-<div >
-<table class="table">
-    <tr>
-        <td width="64" style="border: 0px;"><img class="rounded-circle avatar"  src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}" alt=""></td>
-        <td style="border: 0px;">
-            <h2> {{ user.fullname }} </h2>
-            <h5> {{ user.username }}</h5>
-            <hr>
-            <h5>Ping Me On : <i> {{user.email}} </i></h5>
-           <small>
-                <p> <i> - Mushroom Blogger, Level {{ user.points }}</i> </p>
-                <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
-                {% if user == current_user %}
-                    <p><a href="{{ url_for('account') }}">Edit your profile</a></p>
-                {% elif not current_user.is_following(user) %}
-                    <p>
-                        <form action="{{ url_for('follow', username=user.username) }}" method="post">
-                            {{ form.hidden_tag() }}
-                            {{ form.submit(value='Follow') }}
-                        </form>
-                    </p>
-                {% else %}
-                    <p>
-                      <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
-                            {{ form.hidden_tag() }}
-                            {{ form.submit(value='Unfollow') }}
-                     </form>
-                    </p>
-                {% endif %}
- 
-            
-            </small>
-        </td>
-    </tr>
-</table>
+    <table class="table">
+        <tr>
+            <td width="64" style="border: 0px;"><img class="rounded-circle avatar"  src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}" alt=""></td>
+            <td style="border: 0px;">
+                <h2> {{ user.fullname }} </h2>
+                <h5> {{ user.username }}</h5>
+                <hr>
+                <h5>Ping Me On : <i> {{user.email}} </i></h5>
+               <small>
+                    <p> <i> Points Scored {{ user.points }}</i> </p>
+                    <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
+                    {% if user == current_user %}
+                        <p><a href="{{ url_for('account') }}">Edit your profile</a></p>
+                    {% elif not current_user.is_following(user) %}
+                        <p>
+                            <form action="{{ url_for('follow', username=user.username) }}" method="post">
+                                {{ form.hidden_tag() }}
+                                {{ form.submit(value='Follow') }}
+                            </form>
+                        </p>
+                    {% else %}
+                        <p>
+                          <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
+                                {{ form.hidden_tag() }}
+                                {{ form.submit(value='Unfollow') }}
+                         </form>
+                        </p>
+                    {% endif %}
+     
+                
+                </small>
+            </td>
+        </tr>
+    </table>
+
 </div>
+<br>
+<h1>Fishes By {{user.username}} ({{data.total}})</h1>
+<div class="container">
+    <div class="row">
+      {% for d in data.items %}
+      <div class="col-lg-4">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top img-fluid" src="{{ url_for('static', filename='fish_pics/' + d.image_file) }}" alt="Card image cap" >
+            <div class="card-body">
+              <div style="display:inline-block; vertical-align:top " >
+                <img src="{{ url_for('static', filename='profile_pics/' + d.fish_seller.image_file) }}" alt="64x64" class="mr-2 rounded" style="width: 64px; height: 64px;" data-holder-rendered="true">
+              </div>
+              <div style="display:inline-block">
+                    <h3><strong class="d-block text-dark card-title">{{ d.name }}</strong></h3>
+                
+                <a href="{{ url_for('user_popup', username=user.username)}}"><small><i>@{{ d.fish_seller.username }}</i></small></a>
+              </div>
+              <hr>
+              {% if d.isAvailable %}
+                    <b>Stock Available Now <a href="#" class="badge badge-pill badge-success"> New</a></b> <br>
+              {% else %}
+                  <br>
+              {% endif %}
+              Uploaded : {{d.upload_date.strftime("%d") }} {{d.upload_date.strftime("%b") }} '{{ d.upload_date.strftime("%y")}} {{ d.upload_date.strftime("%a")}} <br>
+              Price    : Rs. {{ d.price }}/- per {{ d.unit }} <br>
+              Vatta    : Rs. {{d.price_vatta}} per {{d.pc_vatta}} pieces <br>
+              {% if current_user == d.fish_seller %}
+                <br><br>
+              {% else %}
+                <a href="{{ url_for('new_order', buyername=current_user.username, sellername=d.fish_seller.username, fish=d.id)}}" class="btn btn-outline-primary btn-lg btn-block">Order Now</a>
+              {% endif %}
+              
+            </div>
+          </div><br>
+      </div>
+      {% endfor %}
+    </div>
+    <br><br><br>
+    {% for page_num in data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if data.page == page_num %}
+          <a class='btn btn-info mb-4' href="{{url_for('all_fish', page=page_num)}}">{{page_num}}</a>
+        {% else %}
+          <a class='btn btn-outline-info mb-4' href="{{url_for('all_fish', page=page_num)}}">{{page_num}}</a>
+        {% endif %}
+      {% else %} 
+         
+      {% endif %}
+    {% endfor %}
+</div>
+ 
 
 {% endblock content %}

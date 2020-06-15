@@ -17,7 +17,7 @@
     
     
 </head>
-<body style="background-image: url('/static/bg.jpg')">
+<body style="background-image: url('/static/smooth.jpg')">
     <header class="site-header">
         <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,18 +59,20 @@
                     </li>
                     
                     {% else %}
-                    <li class="nav-item " >
-                        <a class="nav-link text-white" href="{{ url_for('login') }}">Login <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item " >
-                        <a class="nav-link text-white" href="{{ url_for('register') }}">Register <span class="sr-only">(current)</span></a>
-                    </li>
+                   
                     <li class="nav-item " >
                         <a class="nav-link text-white" href="{{ url_for('all_fish') }}">All Fish<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item " >
                         <a class="nav-link text-white" href="{{ url_for('all_posts') }}">Blogs <span class="sr-only">(current)</span></a>
                     </li>
+                     <li class="nav-item " >
+                        <a class="nav-link text-white" href="{{ url_for('login') }}">Login <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item " >
+                        <a class="nav-link text-white" href="{{ url_for('register') }}">Register <span class="sr-only">(current)</span></a>
+                    </li>
+                    
                     {% endif %}
                     
                 </ul>

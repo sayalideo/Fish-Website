@@ -3,7 +3,7 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, flash, redirect, url_for, request, abort
-from flaskblog.forms import RegistrationForm, LoginForm, UpdateForm, PostForm, NewFishForm, EmptyForm
+from flaskblog.forms import RegistrationForm, LoginForm, UpdateForm, PostForm, NewFishForm, EmptyForm, OrderForm
 from flaskblog.models import User, Order, Fish, Post, Comment, Mycarousel
 from flaskblog import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
@@ -118,10 +118,8 @@ def new_fish():
             picture_file = save_fish_pic(form.picture.data)
             print('picture_file ',picture_file)
         else:
-            picture_file = 'icon.jpeg'
-            
-        
-        fish = Fish(name=form.name.data, description=form.description.data, price=form.price.data, unit=form.unit.data, image_file=picture_file, isAvailable=form.isAvailable.data, fish_seller=current_user)
+            picture_file = 'icon.jpeg' 
+        fish = Fish(name=form.name.data, price=form.price.data, unit=form.unit.data, image_file=picture_file, pc_vatta=form.pc_vatta.data, price_vatta=form.price_vatta.data, isAvailable=form.isAvailable.data, fish_seller=current_user)
         db.session.add(fish)
         db.session.commit()
         flash("Your Fish has been created !", 'success')
@@ -131,7 +129,7 @@ def new_fish():
 @app.route("/fish/all", methods=['GET', 'POST'])
 def all_fish():
     page = request.args.get('page', 1, type=int)
-    data = Fish.query.paginate(page=page, per_page=5)
+    data = Fish.query.order_by(Fish.upload_date.desc()).paginate(page=page, per_page=12)
     return render_template('all_fish.html',data=data)
 
 def save_post_pic(form_picture):
@@ -210,8 +208,10 @@ def delete_post(post_id):
 @login_required
 def user_popup(username):
     form = EmptyForm() 
+    page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('user.html', user=user, form=form)
+    data = Fish.query.filter_by(fish_seller=user).order_by(Fish.upload_date.desc()).paginate(page=page, per_page=12)
+    return render_template('user.html', user=user, form=form, data=data)
 
 @app.route('/follow/<username>', methods=['POST'])
 @login_required
@@ -251,3 +251,22 @@ def unfollow(username):
         return redirect(url_for('user_popup', username=username))
     else:
         return redirect(url_for('home'))
+
+@app.route("/order/new", methods=['GET', 'POST'])
+@login_required
+def new_order():
+    buyer  = User.query.filter_by(username=request.args.get('buyername')).first()
+    seller = User.query.filter_by(username=request.args.get('sellername')).first()
+    fish   = Fish.query.filter_by(id=request.args.get('fish')).first()
+    form = OrderForm()
+    if form.validate_on_submit():
+        order = Order(date_of_delivery=form.date_of_delivery.data, bargained_price=form.bargained_price.data, quantity=form.quantity.data, unit=form.unit.data, is_valid=True, seller_id=seller.id, buyer_id=buyer.id)
+        db.session.add(order)
+        db.session.commit()
+        flash("Your Order has been placed !", 'success')
+        return redirect(url_for('cart'))
+    return render_template("create_order.html", form=form, buyer=buyer, seller=seller, d=fish)
+
+@app.route("/cart", methods=['GET', 'POST'])
+@login_required
+def cart():

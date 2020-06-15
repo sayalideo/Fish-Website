@@ -25,25 +25,44 @@
 
             </div>
             
+            
             <div class="form-group">
-                {{ form.description.label(class="form-control-label") }}
-                {% if form.description.errors %}
+                {{ form.pc_vatta.label(class="form-control-label") }}
+                {% if form.pc_vatta.errors %}
 
-                {{ form.description(class="form-control form-control-lg is-invalid") }}
+                {{ form.pc_vatta(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
-                    {% for error in form.description.errors %}
+                    {% for error in form.pc_vatta.errors %}
                         <span> {{ error }} </span>
                     {% endfor %}
 
                 </div>
                 {% else %}
 
-                {{ form.description(class="form-control form-control-lg is-valid") }}
+                {{ form.pc_vatta(class="form-control form-control-lg is-valid") }}
 
                 {% endif %}
 
             </div>
-            
+            <div class="form-group">
+                {{ form.price_vatta.label(class="form-control-label") }}
+                {% if form.price_vatta.errors %}
+
+                {{ form.price_vatta(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.price_vatta.errors %}
+                        <span> {{ error }} </span>
+                    {% endfor %}
+
+                </div>
+                {% else %}
+
+                {{ form.price_vatta(class="form-control form-control-lg is-valid") }}
+
+                {% endif %}
+
+            </div>
+
             <div class="form-group">
                 {{ form.price.label(class="form-control-label") }}
                 {% if form.price.errors %}
@@ -62,9 +81,6 @@
                 {% endif %}
 
             </div>
-
-           
-
             <div>
                 {% for subfield in form.unit %}
                 <tr>
