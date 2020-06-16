@@ -17,7 +17,7 @@
     
     
 </head>
-<body style="background-image: url('/static/smooth.jpg')">
+<body style="background-image: url('/static/bg.jpg')">
     <header class="site-header">
         <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,11 +41,13 @@
         
                     <li class="nav-item dropdown">
                         <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Let’s Sell
+                          Let’s Fish
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <a class="dropdown-item" href="{{ url_for('new_fish') }}">Add Fish</a>
                           <a class="dropdown-item" href="{{ url_for('all_fish') }}">All Fish</a>
+                          <a class="dropdown-item" href="{{ url_for('cart') }}">My Cart</a>
+                          <a class="dropdown-item" href="{{ url_for('all_orders') }}">My Orders</a>
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="#">Something else here</a>
                         </div>

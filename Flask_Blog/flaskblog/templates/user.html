@@ -56,7 +56,7 @@
               <div style="display:inline-block">
                     <h3><strong class="d-block text-dark card-title">{{ d.name }}</strong></h3>
                 
-                <a href="{{ url_for('user_popup', username=user.username)}}"><small><i>@{{ d.fish_seller.username }}</i></small></a>
+                <a href="{{ url_for('user_popup', username=user.username)}}"><i>@{{ d.fish_seller.username }}</i></a>
               </div>
               <hr>
               {% if d.isAvailable %}

@@ -80,12 +80,14 @@ class Order(db.Model):
     date_of_delivery = db.Column(db.DateTime, index=True, nullable=False, default=datetime.utcnow)
     bargained_price  = db.Column(db.Integer)
     quantity         = db.Column(db.Integer)
-    unit             = db.Column(db.String(20), nullable=False) # kg,gm,pc
+    unit             = db.Column(db.String(20), nullable=False) # kg,gm,v
     is_valid         = db.Column(db.Boolean, nullable=False, default=False)
     seller_id        = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     buyer_id         = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     seller           = db.relationship("User", foreign_keys=[seller_id])
     buyer            = db.relationship("User", foreign_keys=[buyer_id])
+    last_modified_by = db.Column(db.String(20))
+    last_modified_on = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
         return f"Order('{self.seller_id}', '{self.date_placed}', '{self.date_of_delivery}', '{self.bargained_price}')"
@@ -96,7 +98,8 @@ class Fish(db.Model):
     upload_date = db.Column(db.DateTime, index=True, nullable=False, default=datetime.utcnow)
     image_file  = db.Column(db.String(20), nullable=False)
     price       = db.Column(db.Integer, nullable=False)
-    unit        = db.Column(db.String(20), nullable=False) # kg,gm,pc
+    unit        = db.Column(db.String(20), nullable=False) # kg,g
+    size        = db.Column(db.String(20), nullable=False) #Small, Medium, Large
     pc_vatta    = db.Column(db.Integer) 
     price_vatta = db.Column(db.Integer)
     isAvailable = db.Column(db.Boolean, nullable=False, default=False)

@@ -89,6 +89,14 @@
                 </tr>
                 {% endfor %}
             </div>
+            <div>
+                {% for subfield in form.size %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                {% endfor %}
+            </div>
             
         </fieldset>
         <div class="form-check">
