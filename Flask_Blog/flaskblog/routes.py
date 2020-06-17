@@ -298,13 +298,16 @@ def accept():
     flash('Your Order has been accepted!', 'success')
     return redirect(url_for('order', order=order.id))
 
-@app.route("/cart", methods=['POST'])
+@app.route("/cart", methods=['GET'])
 @login_required
 def cart():
     orders = Order.query.filter_by(buyer_id=current_user.id).all() 
+    return render_template('all_orders.html',orders=orders, user='buyer')
 
-@app.route("/all_orders", methods=['POST'])
+
+@app.route("/all_orders", methods=['GET'])
 @login_required
 def all_orders():
     orders = Order.query.filter_by(seller_id=current_user.id).all() 
+    return render_template('all_orders.html',orders=orders, user='seller')
 

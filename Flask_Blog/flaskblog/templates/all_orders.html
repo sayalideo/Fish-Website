@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron bg">
+        <ul class="list-unstyled">
+            {% for order in orders %}
+            <li class="media">
+                    <img src="{{ url_for('static', filename='fish_pics/'+order.fishes[0].image_file)}}" class="mr-3" style="width: 64px; height: 64px;" alt="...">
+                    <div class="media-body" >
+                    {% if user == 'seller' %}
+                        <h5 class="mt-0 mb-1"><a href="{{ url_for('user_popup', username=order.buyer.username)}}">Buyer : <i>@{{ order.buyer.username }}</i></a></h5>
+                    {% elif user== 'buyer' %}
+                        <h5 class="mt-0 mb-1"><a href="{{ url_for('user_popup', username=order.seller.username)}}">Seller : <i>@{{ order.seller.username }}</i></a></h5>
+                    {% endif %}
+                      Date of Delivery : {{ order.date_of_delivery }} 
+                      <span class="text-muted">|</span>
+                      Status : {% if order.is_valid %} Confirmed {% else %} Not Confirmed {% endif %} 
+                      <span class="text-muted">|</span>
+                      Last Bargained By : {{order.last_modified_by}} on {{order.last_modified_on}} <br>
+                      <a href="{{url_for('order', order=order.id)}}" class="btn btn-outline-primary">View Details</a>
+                    </div>
+              
+            </li>
+            <hr>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+{% endblock content %}

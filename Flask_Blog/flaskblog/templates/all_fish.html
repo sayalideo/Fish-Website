@@ -1,11 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-<br>
-<div class="container">
+<br><br>
+<div class="container bg">
+  <br>
     <div class="row">
       {% for d in data.items %}
       <div class="col-lg-4">
-        <div class="card" style="width: 18rem;">
+        <div class="card shadey" style="width: 18rem;">
             <img class="card-img-top img-fluid" src="{{ url_for('static', filename='fish_pics/' + d.image_file) }}" alt="Card image cap" >
             <div class="card-body">
               <div style="display:inline-block; vertical-align:top " >

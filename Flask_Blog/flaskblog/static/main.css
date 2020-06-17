@@ -54,9 +54,14 @@ navy {
   object-fit: cover;
 }
 
+.shadey{
+  margin-top: 50px;
+    box-shadow: 0 0 30px black;
+    padding:0 15px 0 15px;
+}
+
 .bg{
-  background-color: #c4c8ca ;
-  text-align:center;
+  background-color: rgb(253, 253, 253) ;
 }
 
 .fa {
