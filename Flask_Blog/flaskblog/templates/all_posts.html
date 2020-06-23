@@ -25,50 +25,7 @@
   </div>
   {% endfor %}
     
-        <!-- <div class="accordion" id="accordionExample">
-            {% for d in data %}
-            <div class="card">
-              <div class="card-header" id="headingOne">
-                  <div style="display:inline-block vertical-align:top " >
-                    <img src="{{ url_for('static', filename='profile_pics/' + d.post_author.image_file) }}" alt="64x64" class="mr-2 rounded" style="width: 64px; height: 64px;" data-holder-rendered="true">
-                  </div>
-                  <div style="display:inline-block">
-                    <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <h3 class="mb-0"><strong class="d-block text-dark">{{ d.title }}</strong></h3>
-                      </button>
-                    <i> - {{ d.post_author.fullname }}</i>
-                  </div>
-              </div>
-          
-              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body">
-                    <small class="d-block text-gray-dark">@{{ d.post_author.username }}</strong>
-                    <small class="d-block text-gray-dark">Posted On : {{ d.date_posted }}</strong>
-                    {{ d.content }}
-                </div>
-              </div>
-            </div>
-            <br>
-            {% endfor %}
-        </div> -->
-        <!-- {% for d in data %}
-        <div class="media text-muted pt-3">
-            <img src="{{ url_for('static', filename='profile_pics/' + d.post_author.image_file) }}" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" data-holder-rendered="true">
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray cut-text">
-              <strong class="d-block text-dark">{{ d.post_author.fullname }}</strong>
-              <small class="d-block text-gray-dark">@{{ d.post_author.username }}</strong>
-              <small class="d-block text-gray-dark">Posted On : {{ d.date_posted }}</strong>
-            </p>
-        </div>
-        <img src="{{ url_for('static', filename='post_pics/' + d.image_file) }}" alt="" style="display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 50%; width: 256px; height: 128px;">
-        <p>{{ d.content }}</p>
-        {{ d.upvotes }}
-        {% endfor %} -->
-      
-
+       
     
 </div>
 

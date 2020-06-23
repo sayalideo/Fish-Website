@@ -1,13 +1,12 @@
 
 {% extends "layout.html" %}
 {% block content %}
-
 <br><br>
 <div class="container ">
   <div class="jumbotron bg">
     <div class="row">
       <div class="col-sm-3 col-md-3 col-lg-3" >
-          <div class="card" style="width: 18rem;">
+          <div class="card shadey" style="width: 18rem;">
               <img class="card-img-top" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}" alt="Myself">
               <div class="card-body">
                 <h4 class="card-title">@{{ user.username }}</h4>
@@ -19,26 +18,27 @@
         <div class="container">
           <div class="container">
             <div class="container">
+              <br>
               <h2> {{ user.fullname }} </h2>
-              <h5> {{ user.username }}</h5>
+              <h5> @{{ user.username }}</h5>
               <hr>
               <h5>Ping Me On : <i> {{user.email}} </i></h5>
                   <p> <i> Points Scored {{ user.points }}</i> </p>
                   <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
                   {% if user == current_user %}
-                      <p><a href="{{ url_for('account') }}" class="btn btn-outline-primary btn-lg">Edit Profile</a></p>
+                      <p><a href="{{ url_for('account') }}" class="btn btn-outline-primary btn-lg btn-block">Edit Profile</a></p>
                   {% elif not current_user.is_following(user) %}
                       <p>
                           <form action="{{ url_for('follow', username=user.username) }}" method="post">
                               {{ form.hidden_tag() }}
-                              {{ form.submit(value='Follow') }}
+                              {{ form.submit(value='Follow', class="btn btn-outline-primary btn-lg btn-block") }}
                           </form>
                       </p>
                   {% else %}
                       <p>
                         <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
                               {{ form.hidden_tag() }}
-                              {{ form.submit(value='Unfollow') }}
+                              {{ form.submit(value='Unfollow', class="btn btn-outline-primary btn-lg btn-block") }}
                        </form>
                       </p>
                   {% endif %}
@@ -53,12 +53,12 @@
 
 </div>
 <br>
-<h1>Fishes By {{user.username}} ({{data.total}})</h1>
-<div class="container">
+<div class="container bg"><br>
+    <h1>Fishes By @{{user.username}} ({{data.total}})</h1><br>
     <div class="row">
       {% for d in data.items %}
       <div class="col-lg-4">
-        <div class="card" style="width: 18rem;">
+        <div class="card shadey" style="width: 18rem;">
             <img class="card-img-top img-fluid" src="{{ url_for('static', filename='fish_pics/' + d.image_file) }}" alt="Card image cap" >
             <div class="card-body">
               <div style="display:inline-block; vertical-align:top " >
@@ -71,13 +71,13 @@
               </div>
               <hr>
               {% if d.isAvailable %}
-                    <b>Stock Available Now <a href="#" class="badge badge-pill badge-success"> New</a></b> <br>
+                    <b>Stock Available <a href="#" class="badge badge-pill badge-success"> New</a></b> <br>
               {% else %}
                   <br>
               {% endif %}
               Uploaded : {{d.upload_date.strftime("%d") }} {{d.upload_date.strftime("%b") }} '{{ d.upload_date.strftime("%y")}} {{ d.upload_date.strftime("%a")}} <br>
               Price    : Rs. {{ d.price }}/- per {{ d.unit }} <br>
-              Vatta    : Rs. {{d.price_vatta}} per {{d.pc_vatta}} pieces <br>
+              Vatta    : Rs. {{d.price_vatta}} per {{d.pc_vatta}} pc <br>
               {% if current_user == d.fish_seller %}
                 <br><br>
               {% else %}
@@ -89,19 +89,21 @@
       </div>
       {% endfor %}
     </div>
-    <br><br><br>
-    {% for page_num in data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    <br>
+    
+</div>
+<br>
+{% for page_num in data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
       {% if page_num %}
         {% if data.page == page_num %}
-          <a class='btn btn-info mb-4' href="{{url_for('all_fish', page=page_num)}}">{{page_num}}</a>
+          <a class='btn btn-outline-primary mb-4' href="{{url_for('all_fish', page=page_num)}}">{{page_num}}</a>
         {% else %}
-          <a class='btn btn-outline-info mb-4' href="{{url_for('all_fish', page=page_num)}}">{{page_num}}</a>
+          <a class='btn btn-outline-primary mb-4' href="{{url_for('all_fish', page=page_num)}}">{{page_num}}</a>
         {% endif %}
       {% else %} 
          
       {% endif %}
     {% endfor %}
-</div>
  
 
 {% endblock content %}

@@ -17,7 +17,7 @@
                       Status : {% if order.is_valid %} Confirmed {% else %} Not Confirmed {% endif %} 
                       <span class="text-muted">|</span>
                       Last Bargained By : {{order.last_modified_by}} on {{order.last_modified_on}} <br>
-                      <a href="{{url_for('order', order=order.id)}}" class="btn btn-outline-primary">View Details</a>
+                      <a href="{{url_for('order', order=order.id)}}" class="btn btn-outline-primary btn-block">View Details</a>
                     </div>
               
             </li>

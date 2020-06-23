@@ -1,5 +1,6 @@
-from flaskblog import db, login_manager
+from flaskblog import db, login_manager, app
 from datetime import datetime
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_login import UserMixin
  
 @login_manager.user_loader
@@ -31,11 +32,8 @@ class User(db.Model, UserMixin):
     image_file    = db.Column(db.String(20), nullable=False, default='default.jpg')
     password      = db.Column(db.String(60), nullable=False)
     points        = db.Column(db.Integer)
-    #cart          = db.relationship('Order', backref='buyer', lazy='dynamic')
-    #subscriptions = db.relationship('User', secondary=subs, backref=db.backref('subscribers'), lazy='dynamic')
     posts         = db.relationship('Post', backref='post_author', lazy=True)
     fishes        = db.relationship('Fish', backref='fish_seller', lazy='dynamic')
-    #orders        = db.relationship('Order', backref='order_seller', lazy='dynamic')
     mycarousel    = db.relationship('Mycarousel', backref='author', lazy='dynamic')
     followed = db.relationship(
         'User', secondary=followers,
@@ -64,6 +62,20 @@ class User(db.Model, UserMixin):
                 followers.c.follower_id == self.id)
         own = Fish.query.filter_by(seller_id=self.id)
         return followed.union(own).order_by(Fish.upload_date.desc())
+    
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'user_id': self.id}).decode('utf-8')
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+        return User.query.get(user_id)
+
     #username='hh', fullname='Haresh Hambire', email='haresh@gmail.com', password='qwe', points=0
     #username='sharad', fullname='Sharad Chaudhary', email='sharad@gmail.com', password='qwe', points=0
     #username='saiy', fullname='Sayali Deo', email='saiy@gmail.com', password='qwe', points=0

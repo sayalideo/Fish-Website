@@ -38,17 +38,10 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
     </a>
-  </div>
+</div>
   <br>
 
-<div class="icon-bar">
-  <a href="https://www.facebook.com" class="facebook"><i class="fa fa-facebook"></i></a> 
-  <a href="https://www.twitter.com" class="twitter"><i class="fa fa-twitter"></i></a> 
-  <a href="https://www.google.com" class="google"><i class="fa fa-google"></i></a> 
-  <a href="https://www.linkedin.com" class="linkedin"><i class="fa fa-linkedin"></i></a>
-  <a href="https://www.youtube.com" class="youtube"><i class="fa fa-youtube"></i></a> 
-</div>
-<!-- <h3 class="text-white"><i class="test">Let's what our fellow Mushroom Maniacs have to say... </i></h3> -->
+
   <div class="container">
     <div class="row">
       {% for d in data %}
@@ -69,7 +62,7 @@
             <hr>
             <h3 >  {{d.title}} </h3>
             <p class="article-content text-justify text-white cut-text "> {{ d.content }} </p> 
-            <button type="button" class="btn btn-sm btn-outline-dark" ><a class="text-white" href="{{ url_for('post', post_id =d.id )}}">Read More >>></a></button>
+            <button type="button" class="btn btn-block btn-outline-primary" ><a class="text-white" href="{{ url_for('post', post_id =d.id )}}">Read More >>></a></button>
            
         </div>
         

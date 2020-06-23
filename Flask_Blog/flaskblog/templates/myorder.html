@@ -1,78 +1,82 @@
 {% extends "layout.html" %}
 {% block content %}
-<br>
-<div class="row">
-    <div class="col-lg-8" >
-        <div class="jumbotron">
-            Your Order
-            Bargained Price  : {{ order.bargained_price }}
-            Actual Price     : Rs. {{ d.price }} per {{ d.unit }}
-            Rs. {{ price_vatta }} per vatta
-            Quantity Ordered : {{ order.quantity }} {{ order.unit }}
-         <b>Total Bill       : {{ bill }}</b>
-         <hr>
-         Last Bargained By : {{ order.last_modified_by }} on {{ order.last_modified_on }}
-         <hr>
-          {% if order.is_valid == False %}
-         <form method="POST" action="{{ url_for('accept', order=order.id) }}">
-            {{ accept.hidden_tag() }}
-            <fieldset class="form-group">
-                    <div class="form-groupcol-lg-6" >
-                        {{ accept.submit(class="btn btn-outline-info")}}
-                    </div>
-                </div>
+<br><br>
 
-            </fieldset>
-         {% else %}
-            Your Order is Accepted!
-         {% endif %}
-         </form>
-         {% if (order.is_valid == False) and (order.last_modified_by == order.seller.username and current_user == order.buyer.username) or (order.last_modified_by == order.buyer.username and current_user == order.seller.username) %}
-         <form method="POST" action="{{ url_for('order', order=order) }}">
-            {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <div class="row form-group">
-                    <div class="col-lg-6" >
-                        {{ form.price.label(class="form-control-label") }}
-                        {{ form.price()}}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8" >
+            <div class="jumbotron bg">
+                Your Order
+                Bargained Price  : {{ order.bargained_price }}
+                Actual Price     : Rs. {{ d.price }} per {{ d.unit }}
+                Rs. {{ price_vatta }} per vatta
+                Quantity Ordered : {{ order.quantity }} {{ order.unit }}
+             <b>Total Bill       : {{ bill }}</b>
+             <hr>
+             Last Bargained By : {{ order.last_modified_by }} on {{ order.last_modified_on }}
+             <hr>
+              {% if order.is_valid == False %}
+             <form method="POST" action="{{ url_for('accept', order=order.id) }}">
+                {{ accept.hidden_tag() }}
+                <fieldset class="form-group">
+                        <div class="form-groupcol-lg-6" >
+                            {{ accept.submit(class="btn btn-outline-primary btn-block")}}
+                        </div>
                     </div>
-                    <div class="col-lg-6" >
-                        {{ form.submit(class="btn btn-outline-info")}}
+    
+                </fieldset>
+             {% else %}
+                Your Order is Accepted!
+             {% endif %}
+             </form>
+             {% if (order.is_valid == False) and (order.last_modified_by == order.seller.username and current_user == order.buyer.username) or (order.last_modified_by == order.buyer.username and current_user == order.seller.username) %}
+             <form method="POST" action="{{ url_for('order', order=order) }}">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <div class="row form-group">
+                        <div class="col-lg-6" >
+                            {{ form.price.label(class="form-control-label") }}
+                            {{ form.price()}}
+                        </div>
+                        <div class="col-lg-6" >
+                            {{ form.submit(class="btn btn-outline-primary btn-block")}}
+                        </div>
                     </div>
-                </div>
-
-            </fieldset>
-
-         </form>             
-         {% endif %}
-        </div>
-    </div>    
-    <div class="col-lg-4" >
-        <div class="card" style="width: 18rem;">
-            Original Item
-            <img class="card-img-top img-fluid" src="{{ url_for('static', filename='fish_pics/' + d.image_file) }}" alt="Card image cap" >
-            <div class="card-body">
-                <div style="display:inline-block; vertical-align:top " >
-                 <img src="{{ url_for('static', filename='profile_pics/' + d.fish_seller.image_file) }}" alt="64x64" class="mr-2 rounded" style="width: 64px; height: 64px;" data-holder-rendered="true">
+    
+                </fieldset>
+    
+             </form>             
+             {% endif %}
             </div>
-            <div style="display:inline-block">
-                <h3><strong class="d-block text-dark card-title">{{ d.name }}</strong></h3>
+        </div>    
+        <div class="col-lg-4" >
+            <div class="card" style="width: 18rem;">
+                Original Item
+                <img class="card-img-top img-fluid" src="{{ url_for('static', filename='fish_pics/' + d.image_file) }}" alt="Card image cap" >
+                <div class="card-body">
+                    <div style="display:inline-block; vertical-align:top " >
+                     <img src="{{ url_for('static', filename='profile_pics/' + d.fish_seller.image_file) }}" alt="64x64" class="mr-2 rounded" style="width: 64px; height: 64px;" data-holder-rendered="true">
+                </div>
+                <div style="display:inline-block">
+                    <h3><strong class="d-block text-dark card-title">{{ d.name }}</strong></h3>
+                
+                <a href="{{ url_for('user_popup', username=d.fish_seller.username)}}"><small><i>@{{ d.fish_seller.username }}</i></small></a>
+                </div>
+              <hr>
+              {% if d.isAvailable %}
+                    <b>Stock Available Now <a href="#" class="badge badge-pill badge-success"> New</a></b> <br>
+              {% else %}
+                  <br>
+              {% endif %}
+              Uploaded : {{d.upload_date.strftime("%d") }} {{d.upload_date.strftime("%b") }} '{{ d.upload_date.strftime("%y")}} {{ d.upload_date.strftime("%a")}} <br>
+              Price    : Rs. {{ d.price }}/- per {{ d.unit }} <br>
+              Vatta    : Rs. {{d.price_vatta}} per {{d.pc_vatta}} pieces 
             
-            <a href="{{ url_for('user_popup', username=d.fish_seller.username)}}"><small><i>@{{ d.fish_seller.username }}</i></small></a>
+              
             </div>
-          <hr>
-          {% if d.isAvailable %}
-                <b>Stock Available Now <a href="#" class="badge badge-pill badge-success"> New</a></b> <br>
-          {% else %}
-              <br>
-          {% endif %}
-          Uploaded : {{d.upload_date.strftime("%d") }} {{d.upload_date.strftime("%b") }} '{{ d.upload_date.strftime("%y")}} {{ d.upload_date.strftime("%a")}} <br>
-          Price    : Rs. {{ d.price }}/- per {{ d.unit }} <br>
-          Vatta    : Rs. {{d.price_vatta}} per {{d.pc_vatta}} pieces 
-        
-          
         </div>
     </div>
+    
 </div>
 
 

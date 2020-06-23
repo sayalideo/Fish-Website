@@ -19,13 +19,13 @@
               </div>
               <hr>
               {% if d.isAvailable %}
-            <b>Stock Available Now <a href="#" class="badge badge-pill badge-success"> New</a></b> <br>
+            <b>Stock Available <a href="#" class="badge badge-pill badge-success"> New</a></b> <br>
               {% else %}
                 <br>
               {% endif %}
               Uploaded : {{d.upload_date.strftime("%d") }} {{d.upload_date.strftime("%b") }} '{{ d.upload_date.strftime("%y")}} {{ d.upload_date.strftime("%a")}} <br>
               Price    : Rs. {{ d.price }}/- per {{ d.unit }} <br>
-              Vatta    : Rs. {{d.price_vatta}} per {{d.pc_vatta}} pieces <br>
+              Vatta    : Rs. {{d.price_vatta}} per {{d.pc_vatta}} pc <br><br>
               {% if current_user == d.fish_seller %}
                 <br><br>
               {% else %}
@@ -51,6 +51,50 @@
   {% endif %}
   {% endfor %}
 </div>
+<div class="container mycards">
+  <div class="card">
+    <div class="face face1">
+        <div class="content">
+            <img src="{{url_for('static', filename='icon.jpeg')}}" alt="" style="width: 64px; height: 64px;">
+            <h3>Design</h3>
+        </div>
+    </div>
+    <div class="face face2">
+      <div class="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem qui velit porro et</p>
+            <a href="#">Read More</a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="face face1">
+        <div class="content">
+            <img src="{{url_for('static', filename='icon.jpeg')}}" alt="" style="width: 64px; height: 64px;">
+            <h3>Code</h3>
+        </div>
+    </div>
+    <div class="face face2">
+      <div class="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem qui velit porro et</p>
+            <a href="#">Read More</a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="face face1">
+        <div class="content">
+            <img src="{{url_for('static', filename='icon.jpeg')}}" alt="" style="width: 64px; height: 64px;">
+            <h3>Launch</h3>
+        </div>
+    </div>
+    <div class="face face2">
+      <div class="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem qui velit porro et</p>
+            <a href="#">Read More</a>
+      </div>
+    </div>
+  </div>
 
+</div>
 {% endblock content %}
 
