@@ -33,15 +33,15 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item ">
-                  <a class="nav-link text-white" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link text-white" href="{{ url_for('main.home') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item " >
-                    <a class="nav-link text-white" href="{{ url_for('about') }}">About <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="{{ url_for('main.about') }}">About <span class="sr-only">(current)</span></a>
                 </li>
                 
                 {% if current_user.is_authenticated %}
                 <li class="nav-item " >
-                    <a class="nav-link text-white" href="{{ url_for('new_post') }}">New Post <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="{{ url_for('posts.new_post') }}">New Post <span class="sr-only">(current)</span></a>
                 </li>
     
                 <li class="nav-item dropdown">
@@ -49,35 +49,35 @@
                       Let’s Fish
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="{{ url_for('new_fish') }}">Add Fish</a>
-                      <a class="dropdown-item" href="{{ url_for('all_fish') }}">All Fish</a>
-                      <a class="dropdown-item" href="{{ url_for('cart') }}">My Cart</a>
-                      <a class="dropdown-item" href="{{ url_for('all_orders') }}">My Orders</a>
+                      <a class="dropdown-item" href="{{ url_for('fishes.new_fish') }}">Add Fish</a>
+                      <a class="dropdown-item" href="{{ url_for('fishes.all_fish') }}">All Fish</a>
+                      <a class="dropdown-item" href="{{ url_for('fishes.cart') }}">My Cart</a>
+                      <a class="dropdown-item" href="{{ url_for('fishes.all_orders') }}">My Orders</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                   </li>
             
                 <li class="nav-item " >
-                    <a class="nav-link text-white" href="{{ url_for('user_popup',username=current_user.username) }}">My Account <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="{{ url_for('users.user_popup',username=current_user.username) }}">My Account <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item " >
-                    <a class="nav-link text-white" href="{{ url_for('logout') }}">Logout <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="{{ url_for('users.logout') }}">Logout <span class="sr-only">(current)</span></a>
                 </li>
                 
                 {% else %}
                
                 <li class="nav-item " >
-                    <a class="nav-link text-white" href="{{ url_for('all_fish') }}">All Fish<span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="{{ url_for('fishes.all_fish') }}">All Fish<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item " >
-                    <a class="nav-link text-white" href="{{ url_for('all_posts') }}">Blogs <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="{{ url_for('posts.all_posts') }}">Blogs <span class="sr-only">(current)</span></a>
                 </li>
                  <li class="nav-item " >
-                    <a class="nav-link text-white" href="{{ url_for('login') }}">Login <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="{{ url_for('users.login') }}">Login <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item " >
-                    <a class="nav-link text-white" href="{{ url_for('register') }}">Register <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="{{ url_for('users.register') }}">Register <span class="sr-only">(current)</span></a>
                 </li>
                 
                 {% endif %}

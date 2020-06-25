@@ -15,7 +15,7 @@
               <div style="display:inline-block">
                     <h3><strong class="d-block text-dark card-title">{{ d.name }}</strong></h3>
                 
-                    <a href="{{ url_for('user_popup', username=d.fish_seller.username)}}"><i>@{{ d.fish_seller.username }}</i></a>
+                    <a href="{{ url_for('users.user_popup', username=d.fish_seller.username)}}"><i>@{{ d.fish_seller.username }}</i></a>
               </div>
               <hr>
               {% if d.isAvailable %}
@@ -29,7 +29,7 @@
               {% if current_user == d.fish_seller %}
                 <br><br>
               {% else %}
-                <a href="{{ url_for('new_order', buyername=current_user.username, sellername=d.fish_seller.username, fish=d.id)}}" class="btn btn-outline-primary btn-lg btn-block">Order</a>
+                <a href="{{ url_for('fishes.new_order', buyername=current_user.username, sellername=d.fish_seller.username, fish=d.id)}}" class="btn btn-outline-primary btn-lg btn-block">Order</a>
               {% endif %}
             </div>
           </div><br>
@@ -42,9 +42,9 @@
   {% for page_num in data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
   {% if page_num %}
     {% if data.page == page_num %}
-      <a class='btn btn-info mb-4' href="{{url_for('all_fish', page=page_num)}}">{{page_num}}</a>
+      <a class='btn btn-info mb-4' href="{{url_for('fishes.all_fish', page=page_num)}}">{{page_num}}</a>
     {% else %}
-      <a class='btn btn-outline-info mb-4' href="{{url_for('all_fish', page=page_num)}}">{{page_num}}</a>
+      <a class='btn btn-outline-info mb-4' href="{{url_for('fishes.all_fish', page=page_num)}}">{{page_num}}</a>
     {% endif %}
   {% else %} 
      

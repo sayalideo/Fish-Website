@@ -54,7 +54,7 @@
             <div class="side">
                 <h4>
                   <span >
-                    <a class="mr-2 text-white user_popup" href="{{ url_for('user_popup', username=d.post_author.username )}}"> {{ d.post_author.username }} </a> 
+                    <a class="mr-2 text-white user_popup" href="{{ url_for('users.user_popup', username=d.post_author.username )}}"> {{ d.post_author.username }} </a> 
                   </span>
                     <small class="text-muted text-white"> {{d.date_posted.strftime('%d-%m-%Y')}} </small>
                 </h4>                    
@@ -62,7 +62,7 @@
             <hr>
             <h3 >  {{d.title}} </h3>
             <p class="article-content text-justify text-white cut-text "> {{ d.content }} </p> 
-            <button type="button" class="btn btn-block btn-outline-primary" ><a class="text-white" href="{{ url_for('post', post_id =d.id )}}">Read More >>></a></button>
+            <button type="button" class="btn btn-block btn-outline-primary" ><a class="text-white" href="{{ url_for('posts.post', post_id =d.id )}}">Read More >>></a></button>
            
         </div>
         

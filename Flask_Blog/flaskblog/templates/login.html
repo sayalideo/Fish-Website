@@ -55,12 +55,12 @@
                 {{ form.submit(class="btn btn-outline-primary btn-block")}}
             </div>
             <small class="text-muted ml-2">
-                <a href="{{url_for('reset_request')}}">Forgot Password?</a>
+                <a href="{{url_for('users.reset_request')}}">Forgot Password?</a>
             </small>
         </form>
        
             <small class="text-muted">
-                Need To Create An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up</a>
+                Need To Create An Account? <a class="ml-2" href="{{ url_for('users.register') }}">Sign Up</a>
             </small>
       
         

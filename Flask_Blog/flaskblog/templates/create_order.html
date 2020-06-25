@@ -7,7 +7,7 @@
         <div class="col-lg-8" >
                 
             <div class="jumbotron bg">
-                <form method="POST" action="{{ url_for('new_order', sellername=seller.username, buyername=buyer.username, fish=d.id) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ url_for('fishes.new_order', sellername=seller.username, buyername=buyer.username, fish=d.id) }}" enctype="multipart/form-data">
                     {{ form.hidden_tag() }}
                     <fieldset class="form-group">
                         <legend class="border-bottom h3">Place Your Order<br></legend>
@@ -83,7 +83,7 @@
                               <div style="display:inline-block">
                                     <h3><strong class="d-block text-dark card-title">{{ d.name }}</strong></h3>
                                 
-                                <a href="{{ url_for('user_popup', username=d.fish_seller.username)}}"><small><i>@{{ d.fish_seller.username }}</i></small></a>
+                                <a href="{{ url_for('users.user_popup', username=d.fish_seller.username)}}"><small><i>@{{ d.fish_seller.username }}</i></small></a>
                               </div>
                               <hr>
                               {% if d.isAvailable %}

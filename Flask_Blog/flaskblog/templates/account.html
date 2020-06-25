@@ -10,7 +10,7 @@
                 <div class="card-body">
                   <h4 class="card-title">{{ current_user.username }}</h4>
                   <p class="card-text">{{ current_user.email }}</p>
-                  <a href="{{ url_for('user_popup', username=current_user.username) }}" class="btn btn-outline-primary btn-block">My Account</a>
+                  <a href="{{ url_for('users.user_popup', username=current_user.username) }}" class="btn btn-outline-primary btn-block">My Account</a>
                 </div>
             </div>
         </div>
