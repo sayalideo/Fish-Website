@@ -103,7 +103,28 @@
       {% else %} 
          
       {% endif %}
-    {% endfor %}
+{% endfor %}
  
-
+<div class="container bg"><br>
+  <h1>Posts By @{{user.username}} ({{posts.total}})</h1><br>
+  {% for d in posts.items %}
+  <div style="display:inline-block; vertical-align:top " >
+    <img src="{{ url_for('static', filename='profile_pics/' + d.post_author.image_file) }}" alt="64x64" class="mr-2 rounded" style="width: 64px; height: 64px;" data-holder-rendered="true">
+  </div>
+  <div style="display:inline-block">
+    <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <h4><strong class="d-block text-dark">{{ d.title }}</strong></h4>
+      </button>
+    <h5> - {{ d.post_author.fullname }}</h5>
+  </div>
+  <hr>
+  <i><strong class="d-block text-gray-dark">@{{ d.post_author.username }}</strong></i>
+  <strong class="d-block text-gray-dark">Posted On : {{ d.date_posted }}</strong>
+    <img src="{{ url_for('static', filename='post_pics/' + d.image_file) }}" alt="" style="display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%; width: 512px; height: 256px;">
+    <p>{{ d.content }}</p>
+    Upvotes : {{ d.upvotes }} 
+  {% endfor %}
 {% endblock content %}

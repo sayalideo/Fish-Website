@@ -75,8 +75,9 @@ def user_popup(username):
     form = EmptyForm() 
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
-    data = Fish.query.filter_by(fish_seller=user).order_by(Fish.upload_date.desc()).paginate(page=page, per_page=12)
-    return render_template('user.html', user=user, form=form, data=data)
+    data = Fish.query.filter_by(fish_seller=user).order_by(Fish.upload_date.desc()).paginate(page=page, per_page=3)
+    posts = Post.query.filter_by(post_author=user).order_by(Post.date_posted.desc()).paginate(page=page, per_page=3)
+    return render_template('user.html', user=user, form=form, data=data, posts=posts)
 
 @users.route('/follow/<username>', methods=['POST'])
 @login_required

@@ -1,7 +1,119 @@
-{% extends "layout.html" %}
-{% block content %}
 
-<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.jpeg')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Fish For All</title>
+    
+    
+</head>
+<body >
+  <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <img src="{{ url_for('static', filename='icon.jpeg')}}" height="50" width="50" alt="">
+        <a href="/"> &nbsp; <img src="{{ url_for('static', filename='name.png')}}" height="50" width="160" alt="">&nbsp;</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item ">
+              <a class="nav-link text-white" href="{{ url_for('main.home') }}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item " >
+                <a class="nav-link text-white" href="{{ url_for('main.about') }}">About <span class="sr-only">(current)</span></a>
+            </li>
+            
+            {% if current_user.is_authenticated %}
+            <li class="nav-item " >
+                <a class="nav-link text-white" href="{{ url_for('posts.new_post') }}">Create Post <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item " >
+              <a class="nav-link text-white" href="{{ url_for('posts.all_posts') }}">All Posts <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Let’s Fish
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{{ url_for('fishes.new_fish') }}">Add Fish</a>
+                  <a class="dropdown-item" href="{{ url_for('fishes.all_fish') }}">All Fish</a>
+                  <a class="dropdown-item" href="{{ url_for('fishes.cart') }}">My Cart</a>
+                  <a class="dropdown-item" href="{{ url_for('fishes.all_orders') }}">My Orders</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </li>
+        
+            <li class="nav-item " >
+                <a class="nav-link text-white" href="{{ url_for('users.user_popup',username=current_user.username) }}">My Account <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item " >
+                <a class="nav-link text-white" href="{{ url_for('users.logout') }}">Logout <span class="sr-only">(current)</span></a>
+            </li>
+            
+            {% else %}
+           
+            <li class="nav-item " >
+                <a class="nav-link text-white" href="{{ url_for('fishes.all_fish') }}">All Fish<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item " >
+                <a class="nav-link text-white" href="{{ url_for('posts.all_posts') }}">All Posts <span class="sr-only">(current)</span></a>
+            </li>
+             <li class="nav-item " >
+                <a class="nav-link text-white" href="{{ url_for('users.login') }}">Login <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item " >
+                <a class="nav-link text-white" href="{{ url_for('users.register') }}">Register <span class="sr-only">(current)</span></a>
+            </li>
+            
+            {% endif %}
+            
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn1 " type="submit">Search</button>
+          </form>
+    </div>
+  </nav>
+
+  <br><br><br>
+
+  <section class="wave">
+    
+    <div class="row">
+      <div class="column" style="margin:10px; padding:10px">
+        <div class="container">
+          <img src="{{ url_for('static', filename='mainFish.png')}}" height="575" width="550">
+        </div>
+            
+      </div>
+      <div class="column">
+        <div class="container">
+          <br><br><br><br>
+          <p class="text-white display-4 lead" style="text-align: center;">Buying and Selling Fresh Fish <br> has never been so easy! <br> 
+              
+          </p>
+          <h4 class="text-white display-5">Join us to support the initiative <br>#VocalForLocal</h4><br>
+          <a href="{{ url_for('users.login')}}" class="btn btn-outline-light btn-lg btn-block " role="button" aria-pressed="true">LET'S GO FISHING</a>
+        </div>
+        
+      </div>
+    </div>
+  
+  </section>
+  <section></section>
+
+
+</body>
+<!-- <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" data-interval="3000">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
       <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
@@ -38,37 +150,6 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
     </a>
-</div>
-  <br>
+</div> -->
 
-
-  <div class="container">
-    <div class="row">
-      {% for d in data %}
-      <div class="col-lg-4">
-        
-        <div class="jumbotron bg media-body shadow-lg p-3 mb-5 rounded">
-            <div class="side">
-                <img class="rounded-circle avatar"  src="{{ url_for('static', filename='profile_pics/' + d.post_author.image_file) }}" alt="">
-            </div>
-            <div class="side">
-                <h4>
-                  <span >
-                    <a class="mr-2 text-white user_popup" href="{{ url_for('users.user_popup', username=d.post_author.username )}}"> {{ d.post_author.username }} </a> 
-                  </span>
-                    <small class="text-muted text-white"> {{d.date_posted.strftime('%d-%m-%Y')}} </small>
-                </h4>                    
-             </div> 
-            <hr>
-            <h3 >  {{d.title}} </h3>
-            <p class="article-content text-justify text-white cut-text "> {{ d.content }} </p> 
-            <button type="button" class="btn btn-block btn-outline-primary" ><a class="text-white" href="{{ url_for('posts.post', post_id =d.id )}}">Read More >>></a></button>
-           
-        </div>
-        
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-
-{% endblock content %}
+  

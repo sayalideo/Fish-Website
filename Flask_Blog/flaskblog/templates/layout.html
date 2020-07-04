@@ -19,7 +19,7 @@
     
 </head>
 <body style="background-image: url('/static/bg.png')">
-  
+  <!--  -->
 
     
     <header class="site-header">
@@ -41,7 +41,10 @@
                 
                 {% if current_user.is_authenticated %}
                 <li class="nav-item " >
-                    <a class="nav-link text-white" href="{{ url_for('posts.new_post') }}">New Post <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="{{ url_for('posts.new_post') }}">Create Post<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item " >
+                  <a class="nav-link text-white" href="{{ url_for('posts.all_posts') }}">All Posts <span class="sr-only">(current)</span></a>
                 </li>
     
                 <li class="nav-item dropdown">
@@ -71,7 +74,7 @@
                     <a class="nav-link text-white" href="{{ url_for('fishes.all_fish') }}">All Fish<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item " >
-                    <a class="nav-link text-white" href="{{ url_for('posts.all_posts') }}">Blogs <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="{{ url_for('posts.all_posts') }}">All Posts <span class="sr-only">(current)</span></a>
                 </li>
                  <li class="nav-item " >
                     <a class="nav-link text-white" href="{{ url_for('users.login') }}">Login <span class="sr-only">(current)</span></a>
@@ -85,7 +88,7 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn1" type="submit">Search</button>
+                <button class="btn btn1 " type="submit">Search</button>
               </form>
         </div>
     </nav>
