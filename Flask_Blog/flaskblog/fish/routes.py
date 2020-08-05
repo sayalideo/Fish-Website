@@ -24,7 +24,7 @@ def new_fish():
         db.session.add(fish)
         db.session.commit()
         flash("Your Fish has been created !", 'success')
-        return redirect(url_for('users.home'))
+        return redirect(url_for('main.home'))
     return render_template("create_fish.html", form=form, legend="New Post")
 
 @fishes.route("/fish/all", methods=['GET', 'POST'])
